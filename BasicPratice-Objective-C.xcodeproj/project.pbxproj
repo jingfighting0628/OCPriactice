@@ -28,6 +28,7 @@
 		C10B0C0725E2998C00719065 /* DataBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10B0C0625E2998C00719065 /* DataBaseViewController.m */; };
 		C10B0C0D25E299BA00719065 /* OperatingSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10B0C0C25E299BA00719065 /* OperatingSystemViewController.m */; };
 		C10B0C1625E29EC100719065 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10B0C1525E29EC100719065 /* BaseViewController.m */; };
+		C10DE27A25E3179C00EBE57B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE27925E3179C00EBE57B /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,8 @@
 		C10B0C0C25E299BA00719065 /* OperatingSystemViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OperatingSystemViewController.m; sourceTree = "<group>"; };
 		C10B0C1425E29EC100719065 /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		C10B0C1525E29EC100719065 /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		C10DE27825E3179C00EBE57B /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		C10DE27925E3179C00EBE57B /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,8 @@
 				C10B0C0625E2998C00719065 /* DataBaseViewController.m */,
 				C10B0C0B25E299BA00719065 /* OperatingSystemViewController.h */,
 				C10B0C0C25E299BA00719065 /* OperatingSystemViewController.m */,
+				C10DE27825E3179C00EBE57B /* Person.h */,
+				C10DE27925E3179C00EBE57B /* Person.m */,
 				C10B0B8225E290D900719065 /* Assets.xcassets */,
 				C10B0B8425E290D900719065 /* LaunchScreen.storyboard */,
 				C10B0B8725E290D900719065 /* Info.plist */,
@@ -333,6 +338,7 @@
 				C10B0B7E25E290D800719065 /* ViewController.m in Sources */,
 				C10B0B7825E290D800719065 /* AppDelegate.m in Sources */,
 				C10B0BDA25E2988400719065 /* iOSDevelopObjectCommunicationViewController.m in Sources */,
+				C10DE27A25E3179C00EBE57B /* Person.m in Sources */,
 				C10B0B8925E290D900719065 /* main.m in Sources */,
 				C10B0C1625E29EC100719065 /* BaseViewController.m in Sources */,
 				C10B0C0D25E299BA00719065 /* OperatingSystemViewController.m in Sources */,

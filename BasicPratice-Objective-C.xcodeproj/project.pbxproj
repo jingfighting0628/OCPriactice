@@ -29,6 +29,14 @@
 		C10B0C0D25E299BA00719065 /* OperatingSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10B0C0C25E299BA00719065 /* OperatingSystemViewController.m */; };
 		C10B0C1625E29EC100719065 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C10B0C1525E29EC100719065 /* BaseViewController.m */; };
 		C10DE27A25E3179C00EBE57B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE27925E3179C00EBE57B /* Person.m */; };
+		C10DE28025E34E0600EBE57B /* Model1.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE27F25E34E0600EBE57B /* Model1.m */; };
+		C10DE28625E37E8700EBE57B /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE28525E37E8700EBE57B /* Test.m */; };
+		C10DE28C25E3934800EBE57B /* Annimal.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE28B25E3934800EBE57B /* Annimal.m */; };
+		C10DE29225E393BC00EBE57B /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE29125E393BC00EBE57B /* Dog.m */; };
+		C10DE29825E393FE00EBE57B /* Cat.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE29725E393FE00EBE57B /* Cat.m */; };
+		C10DE29E25E39F3000EBE57B /* TestMessageForward.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE29D25E39F3000EBE57B /* TestMessageForward.m */; };
+		C10DE2A425E3A31C00EBE57B /* TestMessageForward2.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */; };
+		C10DE2AA25E3B3B100EBE57B /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +102,22 @@
 		C10B0C1525E29EC100719065 /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		C10DE27825E3179C00EBE57B /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		C10DE27925E3179C00EBE57B /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		C10DE27E25E34E0600EBE57B /* Model1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model1.h; sourceTree = "<group>"; };
+		C10DE27F25E34E0600EBE57B /* Model1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Model1.m; sourceTree = "<group>"; };
+		C10DE28425E37E8700EBE57B /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		C10DE28525E37E8700EBE57B /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		C10DE28A25E3934800EBE57B /* Annimal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Annimal.h; sourceTree = "<group>"; };
+		C10DE28B25E3934800EBE57B /* Annimal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Annimal.m; sourceTree = "<group>"; };
+		C10DE29025E393BC00EBE57B /* Dog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
+		C10DE29125E393BC00EBE57B /* Dog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
+		C10DE29625E393FE00EBE57B /* Cat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cat.h; sourceTree = "<group>"; };
+		C10DE29725E393FE00EBE57B /* Cat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cat.m; sourceTree = "<group>"; };
+		C10DE29C25E39F3000EBE57B /* TestMessageForward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestMessageForward.h; sourceTree = "<group>"; };
+		C10DE29D25E39F3000EBE57B /* TestMessageForward.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMessageForward.m; sourceTree = "<group>"; };
+		C10DE2A225E3A31C00EBE57B /* TestMessageForward2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestMessageForward2.h; sourceTree = "<group>"; };
+		C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMessageForward2.m; sourceTree = "<group>"; };
+		C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +202,22 @@
 				C10B0C0C25E299BA00719065 /* OperatingSystemViewController.m */,
 				C10DE27825E3179C00EBE57B /* Person.h */,
 				C10DE27925E3179C00EBE57B /* Person.m */,
+				C10DE27E25E34E0600EBE57B /* Model1.h */,
+				C10DE27F25E34E0600EBE57B /* Model1.m */,
+				C10DE28425E37E8700EBE57B /* Test.h */,
+				C10DE28525E37E8700EBE57B /* Test.m */,
+				C10DE28A25E3934800EBE57B /* Annimal.h */,
+				C10DE28B25E3934800EBE57B /* Annimal.m */,
+				C10DE29025E393BC00EBE57B /* Dog.h */,
+				C10DE29125E393BC00EBE57B /* Dog.m */,
+				C10DE29625E393FE00EBE57B /* Cat.h */,
+				C10DE29725E393FE00EBE57B /* Cat.m */,
+				C10DE29C25E39F3000EBE57B /* TestMessageForward.h */,
+				C10DE29D25E39F3000EBE57B /* TestMessageForward.m */,
+				C10DE2A225E3A31C00EBE57B /* TestMessageForward2.h */,
+				C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */,
+				C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */,
+				C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */,
 				C10B0B8225E290D900719065 /* Assets.xcassets */,
 				C10B0B8425E290D900719065 /* LaunchScreen.storyboard */,
 				C10B0B8725E290D900719065 /* Info.plist */,
@@ -332,18 +372,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C10DE29225E393BC00EBE57B /* Dog.m in Sources */,
+				C10DE29E25E39F3000EBE57B /* TestMessageForward.m in Sources */,
 				C10B0C0725E2998C00719065 /* DataBaseViewController.m in Sources */,
 				C10B0BC525E297FC00719065 /* Objective-C-LanguageFeaturesViewControllerViewController.m in Sources */,
+				C10DE2A425E3A31C00EBE57B /* TestMessageForward2.m in Sources */,
 				C10B0BF825E2995B00719065 /* iOSOtherTopicViewController.m in Sources */,
 				C10B0B7E25E290D800719065 /* ViewController.m in Sources */,
 				C10B0B7825E290D800719065 /* AppDelegate.m in Sources */,
+				C10DE28625E37E8700EBE57B /* Test.m in Sources */,
+				C10DE28C25E3934800EBE57B /* Annimal.m in Sources */,
 				C10B0BDA25E2988400719065 /* iOSDevelopObjectCommunicationViewController.m in Sources */,
 				C10DE27A25E3179C00EBE57B /* Person.m in Sources */,
 				C10B0B8925E290D900719065 /* main.m in Sources */,
 				C10B0C1625E29EC100719065 /* BaseViewController.m in Sources */,
 				C10B0C0D25E299BA00719065 /* OperatingSystemViewController.m in Sources */,
 				C10B0BF225E2993400719065 /* iOSMultiThreadViewController.m in Sources */,
+				C10DE29825E393FE00EBE57B /* Cat.m in Sources */,
 				C10B0BD425E2983B00719065 /* CocoaViewController.m in Sources */,
+				C10DE28025E34E0600EBE57B /* Model1.m in Sources */,
+				C10DE2AA25E3B3B100EBE57B /* NSString+Extension.m in Sources */,
 				C10B0BCE25E2981800719065 /* Objective-C-LanguageHighGradeFeaturesViewControllerViewController.m in Sources */,
 				C10B0BE025E298B000719065 /* iOSDevelopLayerAndConversationViewController.m in Sources */,
 				C10B0B7B25E290D800719065 /* SceneDelegate.m in Sources */,

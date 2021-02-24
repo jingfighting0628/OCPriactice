@@ -13,6 +13,7 @@
 #import "TestMessageForward.h"
 #import <objc/runtime.h>
 #import "NSString+Extension.h"
+#import "Person.h"
 @interface Objective_C_LanguageHighGradeFeaturesViewControllerViewController ()
 @property (nonatomic, strong)   NSString         *nameStrong;    // 用strong修饰
 @property (nonatomic, copy)     NSString         *nameCopy;      // 用copy修饰
@@ -170,6 +171,15 @@
     //类别和扩展有什么区别
     //子类扩展和继承有什么区别？
     //1.子类继承是进行类扩展一种方法，
+    
+    
+    
+    
+    //KVO本质
+    [self KVO];
+    
+    
+    
 }
 -(void)testCopy1{
     self.normalName     = @"1111";
@@ -297,5 +307,29 @@
     NSLog(@"name:%@",str.name);
     
     
+}
+-(void)KVO
+{
+    Person *p1 = [[Person alloc] init];
+    Person *p2 = [[Person alloc] init];
+    p1.age = 25;
+    p1.age = 26;
+    p2.age = 27;
+    NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+    [p1 addObserver:self forKeyPath:@"age" options:options context:nil];
+    p1.age = 10;
+    //在person addObserver之后
+    /*
+     但是刚才我们发现p1对象的isa指针在经过KVO监听之后已经指向了NSKVONotifyin_Person类对象，NSKVONotifyin_Person其实是Person的子类，那么也就是说其superclass指针是指向Person类对象的，NSKVONotifyin_Person是runtime在运行时生成的。那么p1对象在调用setage方法的时候，肯定会根据p1的isa找到NSKVONotifyin_Person，在NSKVONotifyin_Person中找setage的方法及实现。
+
+     经过查阅资料我们可以了解到。
+     NSKVONotifyin_Person中的setage方法中其实调用了 Fundation框架中C语言函数 _NSsetIntValueAndNotify，_NSsetIntValueAndNotify内部做的操作相当于，首先调用willChangeValueForKey 将要改变方法，之后调用父类的setage方法对成员变量赋值，最后调用didChangeValueForKey已经改变方法。didChangeValueForKey中会调用监听器的监听方法，最终来到监听者的observeValueForKeyPath方法中
+     */
+;
+    
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    NSLog(@"监听到%@的%@改变了%@",object,keyPath,change);
 }
 @end

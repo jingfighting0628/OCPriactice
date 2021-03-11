@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) int age;
 + (Person *) personWithName:(NSString *)name age:(int)age;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) int age;
 @end
 
 NS_ASSUME_NONNULL_END

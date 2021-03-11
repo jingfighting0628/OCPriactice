@@ -14,7 +14,10 @@
 #import <objc/runtime.h>
 #import "NSString+Extension.h"
 #import "Person.h"
+<<<<<<< HEAD
 #import "Test1.h"
+=======
+>>>>>>> 7a0011f45665251b34c6ff7b7105a5169db13100
 @interface Objective_C_LanguageHighGradeFeaturesViewControllerViewController ()
 @property (nonatomic, strong)   NSString         *nameStrong;    // 用strong修饰
 @property (nonatomic, copy)     NSString         *nameCopy;      // 用copy修饰
@@ -167,14 +170,18 @@
     [self runtime];
     //如何打印一个类中所有实例变量
     [self printClassIvars];
+<<<<<<< HEAD
     //动态添加一个类
     [self addClass];
+=======
+>>>>>>> 7a0011f45665251b34c6ff7b7105a5169db13100
     //Category添加属性，系统不会为这个属性生成setter和getter方法,利用runtime给类添加属性
     [self addPropertyForCatagory];
     //类别和扩展有什么区别
     //子类扩展和继承有什么区别？
     //1.子类继承是进行类扩展一种方法，
     
+<<<<<<< HEAD
     //SEL又称选择器，表示的是一个方法的seletor的指针，在很多方法名中都可以看到
     //如UIControl.h中事件的监听方法
     //-(void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControl Events)control Events
@@ -263,6 +270,16 @@
     
     Test1 *test1 = [[Test1 alloc] init];
     [test1 newInsMethod];
+=======
+    
+    
+    
+    //KVO本质
+    [self KVO];
+    
+    
+    
+>>>>>>> 7a0011f45665251b34c6ff7b7105a5169db13100
 }
 -(void)testCopy1{
     self.normalName     = @"1111";
@@ -273,6 +290,7 @@
              self.normalName, _normalName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
     
     //你会发现，nameStrong和nameCopy同原字符串的地址是一样的，所以值肯定也是一样的
+<<<<<<< HEAD
 }
 -(void)testCopy2
 {
@@ -290,6 +308,25 @@
     //你会发现，nameStrong和nameCopy的地址并没有发生变化，还是同最初normalName的地址是一样的，所以值没变，但normalName重新赋值后，地址发生了变化，指针指向了一块新的地址。
     //结论1:如果原字符串为不可变类型字符串，使用copy或strong修饰NSString效果是一样的
 }
+=======
+}
+-(void)testCopy2
+{
+    self.normalName    = @"1111";
+    self.nameStrong    = self.normalName;
+    self.nameCopy      = self.normalName;
+        
+    NSLog(@"\nnormalName: %@ - normalName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
+              self.normalName, _normalName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
+        
+    self.normalName = @"2222";
+        
+    NSLog(@"\nnormalName: %@ - normalName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
+              self.normalName, _normalName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
+    //你会发现，nameStrong和nameCopy的地址并没有发生变化，还是同最初normalName的地址是一样的，所以值没变，但normalName重新赋值后，地址发生了变化，指针指向了一块新的地址。
+    //结论1:如果原字符串为不可变类型字符串，使用copy或strong修饰NSString效果是一样的
+}
+>>>>>>> 7a0011f45665251b34c6ff7b7105a5169db13100
 -(void)testCopy3
 {
     self.mutableName    = [NSMutableString stringWithString:@"1111"];
@@ -301,6 +338,7 @@
     //你会发现，三个属性的值是一样的，但nameStrong同mutableName指向的是同一块地址，而nameCopy则是指向的一块新的地址。那是因为在把mutableName赋值给nameCopy时，自动进行了深拷贝，把mutableName的内容复制了一份，并新开了一块内存来存储，然后让nameCopy指向了这个新的地址
     
     [self.mutableName appendString:@"aaaa"];
+<<<<<<< HEAD
 
        NSLog(@"\nmutableName: %@ - mutableName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
              self.mutableName, _mutableName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
@@ -441,5 +479,120 @@
     [test1 instanceMethod1];
     [test1 instanceMethod2];
     
+=======
+
+       NSLog(@"\nmutableName: %@ - mutableName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
+             self.mutableName, _mutableName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
+    //你会发现，nameStrong的值也被改变了，但nameCopy并没改变。这就是为什么要使用copy的原因了
+}
+-(void)testCopy4
+{
+    self.mutableName     = [NSMutableString stringWithString:@"1111"];
+    self.nameStrong      = self.mutableName;
+    self.nameCopy        = self.mutableName;
+      
+    NSLog(@"\nmutableName: %@ - mutableName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
+            self.mutableName, _mutableName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
+      
+  //    [self.mutableName appendString:@"aaaa"];
+    self.mutableName = [NSMutableString stringWithString:@"2222"];
+
+    NSLog(@"\nmutableName: %@ - mutableName地址: %p\nnameStrong: %@ - nameStrong地址: %p\nnameCopy: %@ - nameCopy地址: %p",
+            self.mutableName, _mutableName, self.nameStrong, _nameStrong, self.nameCopy, _nameCopy);
+}
+//下面这段代码有什么问题
+-(void)setAge:(int)newAge
+{
+    self.age = newAge;
+}
+//self.age 是调用self中age的setter方法，setter方法调用自身，即setter方法中嵌套set方法导致死循环 通过点语法访问变量时，
+//变量左边是setter方法，右边是getter方法
+
+
+- (void)testMessageForward
+{
+    TestMessageForward *test = [[TestMessageForward alloc] init];
+    [test instanceMethod];
+    
+}
+-(void)runtime
+{
+    
+    /*
+     struct objc_class {
+         Class _Nonnull isa  OBJC_ISA_AVAILABILITY;
+
+     #if !__OBJC2__
+         Class _Nullable super_class                              OBJC2_UNAVAILABLE;
+         const char * _Nonnull name                               OBJC2_UNAVAILABLE;
+         long version                                             OBJC2_UNAVAILABLE;
+         long info                                                OBJC2_UNAVAILABLE;
+         long instance_size                                       OBJC2_UNAVAILABLE;
+         struct objc_ivar_list * _Nullable ivars                  OBJC2_UNAVAILABLE;
+         struct objc_method_list * _Nullable * _Nullable methodLists                    OBJC2_UNAVAILABLE;
+         struct objc_cache * _Nonnull cache                       OBJC2_UNAVAILABLE;
+         struct objc_protocol_list * _Nullable protocols          OBJC2_UNAVAILABLE;
+     #endif
+
+     } OBJC2_UNAVAILABLE;
+     
+     */
+    //在这个结构体中，有几个重要的字段
+    //1/isa 在OC中，所有的类自身也是一个对象 这个对象的Class里面也存在一个isa指针
+    //对象需要通过isa指针找到它的类，类需要通过isa指针找到它的元类(Meta Class)
+    //元类可以理解为类对象的类，每个类都会有一个单独的元类，事实上元类也是一个类，它也
+    //存在一个isa指针，它的指针指向父类的元类，也就是说，任何NSObject继承体系下的元类
+    //都使用NSObject的元类作为自己的所属类，而基类的元类isa的指向它自己，这样就形成一个
+    //完美闭环，isa指针在调用实例方法和类方法的时候起到重要作用
+    //2‘superClass:指向该类的父类，如果该类已经是最顶层的类(Root Class)那么super_class就是nil
+    //3.cache：主要是缓存类中最近使用的方法，当开发者调用过一个方法后，runtime会将这个方法缓存到cache列表中，
+    //如果再次调用这个方法，那么runtime就会优先去cache中查找，如果cache没有，那么就会去methodLists
+    //4.ivars指向该类的成员变量链表
+    //5.methodLists指向方法定义的链表
+    //6.protocols：指向协议链表
+    
+}
+- (void)printClassIvars
+{
+    //OC中的类中由Class类型表示的，而Class是一个objc_class类型的结构体,它包含了实例变量列表(objc_ivar_list)、方法
+    //列表(objc_method_list)和协议列表(objc_protocol_list)开发者可以通过runtime提供函数来操作
+    
+    //获取成员变量列表函数如下:
+    // Ivar *class_copyIvarList(Class class ,unsigned int *outCount)
+}
+- (void)addPropertyForCatagory
+{
+    
+    NSString *str = @"123";
+    str.name = @"1234";
+    
+    NSLog(@"name:%@",str.name);
+    
+    
+}
+-(void)KVO
+{
+    Person *p1 = [[Person alloc] init];
+    Person *p2 = [[Person alloc] init];
+    p1.age = 25;
+    p1.age = 26;
+    p2.age = 27;
+    NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+    [p1 addObserver:self forKeyPath:@"age" options:options context:nil];
+    p1.age = 10;
+    //在person addObserver之后
+    /*
+     但是刚才我们发现p1对象的isa指针在经过KVO监听之后已经指向了NSKVONotifyin_Person类对象，NSKVONotifyin_Person其实是Person的子类，那么也就是说其superclass指针是指向Person类对象的，NSKVONotifyin_Person是runtime在运行时生成的。那么p1对象在调用setage方法的时候，肯定会根据p1的isa找到NSKVONotifyin_Person，在NSKVONotifyin_Person中找setage的方法及实现。
+
+     经过查阅资料我们可以了解到。
+     NSKVONotifyin_Person中的setage方法中其实调用了 Fundation框架中C语言函数 _NSsetIntValueAndNotify，_NSsetIntValueAndNotify内部做的操作相当于，首先调用willChangeValueForKey 将要改变方法，之后调用父类的setage方法对成员变量赋值，最后调用didChangeValueForKey已经改变方法。didChangeValueForKey中会调用监听器的监听方法，最终来到监听者的observeValueForKeyPath方法中
+     */
+;
+    
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    NSLog(@"监听到%@的%@改变了%@",object,keyPath,change);
+>>>>>>> 7a0011f45665251b34c6ff7b7105a5169db13100
 }
 @end

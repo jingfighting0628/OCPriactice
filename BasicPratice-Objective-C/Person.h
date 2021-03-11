@@ -10,6 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Person : NSObject
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, assign) int age;
 + (Person *) personWithName:(NSString *)name age:(int)age;
 @end
 

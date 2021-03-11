@@ -37,6 +37,7 @@
 		C10DE29E25E39F3000EBE57B /* TestMessageForward.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE29D25E39F3000EBE57B /* TestMessageForward.m */; };
 		C10DE2A425E3A31C00EBE57B /* TestMessageForward2.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */; };
 		C10DE2AA25E3B3B100EBE57B /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */; };
+		C11CE39925F9E93C00DE2AE2 /* Test1.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CE39825F9E93C00DE2AE2 /* Test1.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,8 @@
 		C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMessageForward2.m; sourceTree = "<group>"; };
 		C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		C11CE39725F9E93C00DE2AE2 /* Test1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test1.h; sourceTree = "<group>"; };
+		C11CE39825F9E93C00DE2AE2 /* Test1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test1.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +221,8 @@
 				C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */,
 				C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */,
 				C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */,
+				C11CE39725F9E93C00DE2AE2 /* Test1.h */,
+				C11CE39825F9E93C00DE2AE2 /* Test1.m */,
 				C10B0B8225E290D900719065 /* Assets.xcassets */,
 				C10B0B8425E290D900719065 /* LaunchScreen.storyboard */,
 				C10B0B8725E290D900719065 /* Info.plist */,
@@ -384,6 +389,7 @@
 				C10DE28C25E3934800EBE57B /* Annimal.m in Sources */,
 				C10B0BDA25E2988400719065 /* iOSDevelopObjectCommunicationViewController.m in Sources */,
 				C10DE27A25E3179C00EBE57B /* Person.m in Sources */,
+				C11CE39925F9E93C00DE2AE2 /* Test1.m in Sources */,
 				C10B0B8925E290D900719065 /* main.m in Sources */,
 				C10B0C1625E29EC100719065 /* BaseViewController.m in Sources */,
 				C10B0C0D25E299BA00719065 /* OperatingSystemViewController.m in Sources */,

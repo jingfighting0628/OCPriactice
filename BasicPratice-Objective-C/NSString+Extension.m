@@ -19,4 +19,16 @@
     objc_setAssociatedObject(self, @"name", name ,OBJC_ASSOCIATION_RETAIN);
     
 }
++(void)load
+{
+    Method description = class_getInstanceMethod([self class], @selector(description));
+    
+    Method myDescription = class_getInstanceMethod([self class], @selector(myDescription));
+    
+    method_exchangeImplementations(description, myDescription);
+}
+-(NSString *)myDescription
+{
+    return [NSString stringWithFormat:@"这是自定义打印方法"];
+}
 @end

@@ -8,8 +8,7 @@
 #import "Person.h"
 
 @interface Person ()
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) int age;
+
 @end
 
 @implementation Person

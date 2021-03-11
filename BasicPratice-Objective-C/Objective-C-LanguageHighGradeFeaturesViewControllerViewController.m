@@ -13,6 +13,8 @@
 #import "TestMessageForward.h"
 #import <objc/runtime.h>
 #import "NSString+Extension.h"
+#import "Person.h"
+#import "Test1.h"
 @interface Objective_C_LanguageHighGradeFeaturesViewControllerViewController ()
 @property (nonatomic, strong)   NSString         *nameStrong;    // 用strong修饰
 @property (nonatomic, copy)     NSString         *nameCopy;      // 用copy修饰
@@ -165,11 +167,102 @@
     [self runtime];
     //如何打印一个类中所有实例变量
     [self printClassIvars];
+    //动态添加一个类
+    [self addClass];
     //Category添加属性，系统不会为这个属性生成setter和getter方法,利用runtime给类添加属性
     [self addPropertyForCatagory];
     //类别和扩展有什么区别
     //子类扩展和继承有什么区别？
     //1.子类继承是进行类扩展一种方法，
+    
+    //SEL又称选择器，表示的是一个方法的seletor的指针，在很多方法名中都可以看到
+    //如UIControl.h中事件的监听方法
+    //-(void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControl Events)control Events
+    //其中参数action就是SEL类型 SEL的定义如下:
+    //typedef struct objc_selector *SEL
+    //方法的selector用于表示运行时的名字。Objective-C在编译时，会根据每个方法的名字、参数列表
+    //生成一个唯一的整型标识，这个标识就是SEL，正因为其具有唯一性，所以在Objective-C的同一个类中
+    //不能存在两个同名的方法，即使参数类型不同也不行
+    //开发者可以在运行时添加新的selector，也可以在运行时获取已存在的seletor，可以通过下面3种、、
+    //方法获取SEL
+    //在运行时注册一个方法，返回一个SEL指针
+    //SEL sel_registerName(const char *str)
+    //编译器提供的方法
+    //@seletor(seletor)
+    //通过字符串获取SEL
+    //NSSelectorFromString(NSString *aSelectorName)
+    //事实上，工程中所有的SEL会组成一个Set集合，Set特点就是具有唯一性，因此SEL也是唯一的，如果
+    //想要查找某个方法，那么只需要找到这个方法的所对应的SEL就可以了， SEL实际上就是个根据方法名
+    //Hash转换的一个字符串
+    
+    //什么是IMP？
+    //和SEL一样，IMP实际上也是个函数指针，它指向方法实现的首地址，可以把它理解为
+    //方法的具体实现，其定义如下
+    // id(*IMP)(id,SEL,....)
+    //前面讲过可以通过SEL查找方法，实际上就是查找方法的IMP，由于每个方法对应唯一的SEL
+    //所以可以通过SEL方便快速准确地获取对应的IMP，取得IMP之后，就可以调用
+    //普通的C语言函数一样来使用这个函数指针了
+    //在objc/runtime.h还定义用以表示方法的结构体
+    
+    //typedef struct objc_method *Method;
+    /*
+    struct objc_method{
+        SEL method_name
+        char *method_types
+        IMP method_imp
+        
+    }
+     */
+    //可以看到结构体objc_method包含了一个SEL和IMP，实际上它相当于
+    //在SEL和IMP之间作了一个映射
+    
+    //isKindOfClass 和 isMemberOfClass有什么区别与联系
+    //isKindOfClass 和isMemberOfClass都是Objective-C的内省特性方法
+    //用于实现动态类型识别，
+    //isKindOfClass判断某个对象是否是Class类型的实例或者及其子类的实例
+    //isMemberOfClass只判断某个对象是否是Class实例的实例不放宽到子类
+    
+    //Category类别是OC语言中一个灵活的类扩展机制，用在不获悉、不改变原来代码
+    //的情况下往一个已经存在的类中添加新的方法，只需要知道这个类的公开接口，而
+    //不需要知道类的源代码，类别只能为已存在的类添加新的功能扩展方法，而不能
+    //添加属性(不使用runtime)，类别扩展的新方法有更高的优先级，会覆盖类中同名的
+    //已有的方法，类别的设计体现面向对象的核心原则，即开放封闭原则，对扩展开放
+    //对修改封闭，从而降低代码的耦合性
+    
+    //类别和其他特性(类扩展和继承有什么区别)？
+    //1、子类继承是类扩展的另一种常用方法，当然基于子类继承的扩展更加自由、正式
+    //既可以新增属性、也可以新增方法，类别可以在不获悉、不改变原来代码的情况下里面
+    //添加新的方法，但也只能添加方法，不能添加属性，属于功能上的扩展，类别扩展
+    //优点是不需要创建一个新的类，而是在系统中已有的类上直接扩展、覆写，不需要更改类
+    //就可以添加并使用扩展方法
+    //2、相对于类继承扩展，类别另一个明显优势功能的局部化封装，扩展的功能
+    //只会在本类中被引用时看到
+    //类别和扩展的区别如下：
+    //类扩展明显区别在于:类扩展可以添加属性，另外，类扩展添加的方法是必须要实现的
+    //类扩展可以认为是一个私有的匿名的类别，因为类扩展定义在.m文件头部，添加的
+    //属性和方法都没有暴露在头文件，所以在不考虑运行时特性的前提下这些扩展属性和方法
+    //只能在类内部使用，一定程度上可以说是实现了私有的机制
+    
+    //Methdo Swizzling
+    
+    //运行时几种特殊的类型
+    //1、Class 类名通过类的class类方法获得 例如【UIViewController claas】
+    //2、SEL 选择器也就是方法名，通过@selector(方法名:)获得，例如:@selector(buttonClick:)
+    //3、Method 方法即运行时类中定义的方法，包括方法名(SEL)和方法实现(IMP)两部分
+    //通过运行时方法classgetInstanceMethod或classgetClassMethod获得
+    //4、IMP 方法实现类型指方法的实现部分，通过运行时方法classgetMethod Implementation
+    // 或 methodgetImplementation获得
+    
+    //method Swizzling的应用场景有哪些
+    
+    //1、替换类中两个类方法或实例方法的实现
+    
+    [self replaceClassMethodOrInstanceMethdoImp];
+    
+    //测试运行时新添加实例方法调用
+    
+    Test1 *test1 = [[Test1 alloc] init];
+    [test1 newInsMethod];
 }
 -(void)testCopy1{
     self.normalName     = @"1111";
@@ -287,6 +380,27 @@
     
     //获取成员变量列表函数如下:
     // Ivar *class_copyIvarList(Class class ,unsigned int *outCount)
+    
+    Person *person = [[Person alloc] init];
+    person.age = 20;
+    person.name = @"Sam";
+    unsigned int count = 0;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    Ivar *list = class_copyIvarList([person class], &count);
+    for (int i = 0; i < count; i++) {
+        NSString *ivarName = [NSString stringWithUTF8String:ivar_getName(list[i])];
+        id ivarValue = [person valueForKey:ivarName];
+        if (ivarName) {
+            dict[ivarName] = ivarValue;
+        } else {
+            dict[ivarName] = @"";
+        }
+    }
+    for (NSString *ivarName in dict.allKeys) {
+        NSLog(@"ivarName:%@ ivarValue:%@",ivarName,dict[ivarName]);
+    }
+    
+    
 }
 - (void)addPropertyForCatagory
 {
@@ -296,6 +410,36 @@
     
     NSLog(@"name:%@",str.name);
     
+    
+}
+-(void)addClass
+{
+    Class myClass = objc_allocateClassPair([NSObject class], "myClass", 0);
+    
+    //@encode(aType)
+    class_addIvar(myClass, "_address", sizeof(NSString *), log2(sizeof(NSString *)), @encode(NSString *));
+    class_addIvar(myClass, "_age", sizeof(NSUInteger), log(sizeof(NSUInteger)), @encode(NSUInteger));
+    
+    objc_registerClassPair(myClass);
+    
+    id object = [[myClass alloc] init];
+    
+    [object setValue:@"china" forKey:@"address"];
+    [object setValue:@20 forKey:@"age"];
+    
+    NSLog(@"adress = %@ age = %@",[object valueForKey:@"address"],[object valueForKey:@"age"]);
+    object = nil;
+    objc_disposeClassPair(myClass);
+    
+    
+}
+-(void)replaceClassMethodOrInstanceMethdoImp
+{
+    Test1 *test1 = [[Test1 alloc] init];
+    [test1 classMethod1];
+    [test1 classMethod2];
+    [test1 instanceMethod1];
+    [test1 instanceMethod2];
     
 }
 @end

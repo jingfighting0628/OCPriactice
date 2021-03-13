@@ -26,7 +26,7 @@
     
     Method myDescription = class_getInstanceMethod([self class], @selector(myDescription));
     
-    method_exchangeImplementations(description, myDescription);
+    //method_exchangeImplementations(description, myDescription);
 }
 -(NSString *)myDescription
 {

@@ -37,9 +37,9 @@
 		C10DE29E25E39F3000EBE57B /* TestMessageForward.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE29D25E39F3000EBE57B /* TestMessageForward.m */; };
 		C10DE2A425E3A31C00EBE57B /* TestMessageForward2.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */; };
 		C10DE2AA25E3B3B100EBE57B /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */; };
-
 		C11CE39925F9E93C00DE2AE2 /* Test1.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CE39825F9E93C00DE2AE2 /* Test1.m */; };
-
+		C11CE3A925FA213700DE2AE2 /* Major.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CE3A825FA213700DE2AE2 /* Major.m */; };
+		C11CE3AF25FA216E00DE2AE2 /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CE3AE25FA216E00DE2AE2 /* Student.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,10 +121,12 @@
 		C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMessageForward2.m; sourceTree = "<group>"; };
 		C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
-
 		C11CE39725F9E93C00DE2AE2 /* Test1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test1.h; sourceTree = "<group>"; };
 		C11CE39825F9E93C00DE2AE2 /* Test1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test1.m; sourceTree = "<group>"; };
-
+		C11CE3A725FA213700DE2AE2 /* Major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Major.h; sourceTree = "<group>"; };
+		C11CE3A825FA213700DE2AE2 /* Major.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Major.m; sourceTree = "<group>"; };
+		C11CE3AD25FA216E00DE2AE2 /* Student.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
+		C11CE3AE25FA216E00DE2AE2 /* Student.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,10 +227,12 @@
 				C10DE2A325E3A31C00EBE57B /* TestMessageForward2.m */,
 				C10DE2A825E3B3B100EBE57B /* NSString+Extension.h */,
 				C10DE2A925E3B3B100EBE57B /* NSString+Extension.m */,
-
 				C11CE39725F9E93C00DE2AE2 /* Test1.h */,
 				C11CE39825F9E93C00DE2AE2 /* Test1.m */,
-
+				C11CE3A725FA213700DE2AE2 /* Major.h */,
+				C11CE3A825FA213700DE2AE2 /* Major.m */,
+				C11CE3AD25FA216E00DE2AE2 /* Student.h */,
+				C11CE3AE25FA216E00DE2AE2 /* Student.m */,
 				C10B0B8225E290D900719065 /* Assets.xcassets */,
 				C10B0B8425E290D900719065 /* LaunchScreen.storyboard */,
 				C10B0B8725E290D900719065 /* Info.plist */,
@@ -402,11 +406,13 @@
 				C10B0BF225E2993400719065 /* iOSMultiThreadViewController.m in Sources */,
 				C10DE29825E393FE00EBE57B /* Cat.m in Sources */,
 				C10B0BD425E2983B00719065 /* CocoaViewController.m in Sources */,
+				C11CE3A925FA213700DE2AE2 /* Major.m in Sources */,
 				C10DE28025E34E0600EBE57B /* Model1.m in Sources */,
 				C10DE2AA25E3B3B100EBE57B /* NSString+Extension.m in Sources */,
 				C10B0BCE25E2981800719065 /* Objective-C-LanguageHighGradeFeaturesViewControllerViewController.m in Sources */,
 				C10B0BE025E298B000719065 /* iOSDevelopLayerAndConversationViewController.m in Sources */,
 				C10B0B7B25E290D800719065 /* SceneDelegate.m in Sources */,
+				C11CE3AF25FA216E00DE2AE2 /* Student.m in Sources */,
 				C10B0BB025E2970A00719065 /* iOSDevelopBasicConceptViewController.m in Sources */,
 				C10B0BEC25E2990300719065 /* iOSMemoryManagementViewController.m in Sources */,
 				C10B0BE625E298D100719065 /* iOSDataPersistenceViewController.m in Sources */,

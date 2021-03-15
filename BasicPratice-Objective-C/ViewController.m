@@ -132,6 +132,7 @@
     }
     else if (indexPath.row == 3){
         CocoaViewController *vc = [[CocoaViewController alloc] init];
+        //vc.NavTitle = dic[@"Navtitle"];
         [self.navigationController pushViewController:vc animated:YES ];
         
     }
@@ -154,6 +155,7 @@
     }
     else if (indexPath.row == 8){
         iOSMultiThreadViewController *vc = [[iOSMultiThreadViewController alloc] init];
+        //vc.NavTitle = dic[@"Navtitle"];
         [self.navigationController pushViewController:vc animated:YES ];
     }
     else if (indexPath.row == 9){

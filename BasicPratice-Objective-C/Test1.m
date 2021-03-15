@@ -51,7 +51,7 @@
         NSLog(@"类方法实现运行时交换失败");
         return;
     }
-    method_exchangeImplementations(ClassMethod1, ClassMethod2);
+    //method_exchangeImplementations(ClassMethod1, ClassMethod2);
     
     //重新设置类中某个方法的实现
     

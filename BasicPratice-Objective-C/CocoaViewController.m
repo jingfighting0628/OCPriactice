@@ -54,7 +54,7 @@
     // Do any additional setup after loading the view.
     
     //视图加载完成，可以动态添加其他UI控件
-    
+    //self.view.backgroundColor = [UIColor whiteColor];
 }
 -(void)viewWillAppear:(BOOL)animated
 {

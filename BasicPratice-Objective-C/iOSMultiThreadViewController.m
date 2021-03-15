@@ -21,6 +21,8 @@
     //[self NSThread];
     
     [self GCD];
+    
+    [self operation];
 }
 -(void)NSThread
 {
@@ -204,4 +206,75 @@
     
 }
 
+-(void)operation
+{
+    //NSOperation是基于GCD的一个抽象基类，将线程封装成要执行的操作，不需要管理线程的生命周期和同步，但比GCD可控性更强，例如可以加入操作依赖控制操作执行顺序
+    //设置操作队列最大可并发的操作个数(setMaxConcurrentOperationCount)，取消
+    //操作(cancel)等
+    
+    //NSOperation作为抽象类不具备封装开发者的操作的功能，需要使用两个它的实体子类
+    //NSBlockOperation和NSInvocationOperation，或者继承NSOperation自定义子类
+    //NSInvocationOperation和NSBlockOperation 用法区别是:前者执行指定方法
+    //后者执行代码块，相对来说后者更加灵活易用.NSOperation操作配置完成后便可调用
+    //start函数在当前线程执行，如果要异步执行避免阻塞当前线程，那么可以加入NSOperationQueue中异步执行
+   
+    
+    //NSInvocationOperation初始化
+    
+    NSInvocationOperation *invoOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(run) object:nil];
+    
+    [invoOperation start];
+    
+    NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"NSBlockOperation");
+    }];
+    
+    //另外，NSBlockOperatipn可以后续继续添加block代码块，操作启动后会在
+    //不同线程并发这些代码块，
+    //
+    
+    NSBlockOperation *blkOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"NSBlockOperationA：%@",[NSThread currentThread]);
+    }];
+    
+    [blkOperation addExecutionBlock:^{
+        NSLog(@"NSBlockOperationB:%@",[NSThread currentThread]);
+    }];
+    
+    [blkOperation addExecutionBlock:^{
+        NSLog(@"NSBlockOperationC：%@",[NSThread currentThread]);
+    }];
+    //另外NSOperation的可控性比GCD要强,其中一个非常重要特性是可以设置各个操作
+    //之间的依赖实现线程同步，例如，规定操作A要在操作B完成之后才能开始执行，称为
+    //A依赖于操作B，而GCD中任务默认是先进先出的，要实现线程同步需要通过组队列或信号量等方式实现。
+    
+    NSOperationQueue *queue = [NSOperationQueue mainQueue];
+    //创建 a、b、c操作
+    
+    NSOperation *c = [NSBlockOperation blockOperationWithBlock:^{
+        
+        NSLog(@"OperationC");
+    }];
+    
+    NSOperation *a = [NSBlockOperation blockOperationWithBlock:^{
+        
+        NSLog(@"OperationA");
+    }];
+    
+    NSOperation *b = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"OperationB");
+    }];
+    //添加操作依赖，c依赖a和b，这样c一定会在a和b完成后才执行，即A、B、C
+    [c addDependency:a];
+    [c addDependency:b];
+    //添加操作a、b、c到操作队列queue 特意将c在a和b之前添加
+    [queue addOperation:c];
+    [queue addOperation:a];
+    [queue addOperation:b];
+    
+    //NSBlockOperation和NSInvocationOperation可以满足多数情况下的编程需求
+    //如果需求特殊，那么需要继承NSOperation类自定义子类来更加灵活的实现
+    
+    
+}
 @end

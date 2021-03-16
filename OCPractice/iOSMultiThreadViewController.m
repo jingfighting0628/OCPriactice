@@ -7,8 +7,11 @@
 
 #import "iOSMultiThreadViewController.h"
 #import "Annimal.h"
-@interface iOSMultiThreadViewController ()
 
+typedef void (^block)();
+@interface iOSMultiThreadViewController ()
+@property (nonatomic, copy) block myBlock;
+@property (nonatomic, copy) NSString *blockString;
 @end
 
 @implementation iOSMultiThreadViewController
@@ -378,7 +381,296 @@
     //可以发现发现B访问资源的时间比线程A要晚5s 关键字synchronized将实例
     //对象someone设定为锁的唯一标识,只有标识相同时，才满足互斥，如果线程B
     //中的锁标识改为其他对象，那么线程B将不会被阻塞
+
+}
+-(void)NSURLConnection
+{
+    //NSURLConnection 使用步骤
+    //1、创建NSURL对象，用于设置请求路径
+    //2、创建一个NSURLRequest对象,并设置请求头、请求体
+    //3、创建一个NSURLResponse对象用于接收响应数据,一般使用NSURLReponse的子类
+    //NSHTTPURLResponse
+    //4、使用NSURLConnection发送同步异步请求
+    
+    NSURL *url = [NSURL URLWithString:@"IMAGRURL"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSHTTPURLResponse * response = nil;
+    NSError *error = nil;
+    //发送同步请求对阻塞当前线程
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    //_image = [UIImage imageWithData:data];
+     //异步的POST请求
+    NSMutableURLRequest *request1 = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"IMGAGEURL"]];
+    
+    request1.HTTPMethod = @"POST";
+    request1.HTTPBody = [@"username=520it&pwd=520type=JSON" dataUsingEncoding:NSUTF8StringEncoding];
+    //设置请求的超时时间
+    request1.timeoutInterval = 15;
+    //设置请求头
+    [request1 setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if (connectionError) {
+            NSLog(@"error:%@",error.userInfo);
+        }else {
+            //_image = [UIImage imageWithData:data];
+            
+            
+        }
+    }];
+    //NSURLConnectionDelegata 的使用
+    //可以使用NSURLConnectionDelegate监听网络请求的响应
+    
+    [NSURLConnection connectionWithRequest:request delegate:self];
+    
     
     
 }
+
+//当收到服务器响应的时候调用，第一个参数connection监听的是哪个NSURLConnection对象
+//第二个参数response接收到的服务器返回的响应头信息
+
+
+
+
+
+
+
+-(void)NSURLSession
+{
+    //NSURLSession 指的不仅是同名类NSURLSession，它还包括一系列相关联的类
+    //NSURLSession包括了之前相同的组件：NSURLRequest 与 NSURLCache，但是
+    //将NSURLConnection 替换成了 NSURLSession、NSURLSessionConfiguration及
+    //NSURLSessionTask、NSURLSessionUploadTask、NSURLSessionDownloadTask
+    
+    //与NSURLConnection相比,NSURLSession最直接的改进就是可以配置每个session的
+    //缓存、协议、cookie以及证书策略(Credential Policy)，甚至跨进程共享这些信息
+    //这将允许程序和网络基础框架之间相互独立,不会发生干扰，每个URLSession对象都
+    //由一个NSURLSessionConfiguration对象进行初始化，后者指定了刚才提到那些策略以及用来增强移动设备上性能的新选项
+    
+    //NSURLSessionTask 负责处理数据的加载以及文件的数据的客户端与服务器之间的上传和
+    //和下载，它是一个抽象类，一般使用子类:NSURLSessionDataTask 、NSURLSessionUploadTask、NSURLSessionDownloadTask。这3个子类
+    //封装了现代程序3个最基本的网络任务:获取数据(JSON或XML),上传文件、下载文件
+    
+    //1、创建NSURLSessionConfiguration对象对NSURLSession进行配置
+    //2、创建NSURLSession对象
+    //3、利用上一步创建好的NSURLSession对象创建NSURLSessionTask的子类对象
+    //4、执行请求任务
+    
+    NSURL *url = [NSURL URLWithString:@"IMAGEURL"];
+    //创建请求对象，默认GET请求
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    //创建配置
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //创建NSURLSession对象
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    //创建任务
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error) {
+            return;
+        }
+        //解析返回的数据
+        
+        //_image = [UIImage imageWithData:data];
+        
+        
+        
+    }];
+    
+    [task resume];
+    
+    
+    
+}
+//NSURLConnection 与 NSURLSession 区别
+
+
+//block与GCD
+
+-(void)block
+{
+    //block有哪几种定义方式
+    //在Objective-C，block定义包含了block类型的声明和实现
+    //基本形式如下
+    //返回值类型(^block名称)(参数类型) = ^(参数类型和参数名){}
+    //其中返回值类型和参数可以是空,如果有参数,那么定义block的时候
+    //必须要标明参数的类型和参数名，所以大致有3种戏份的定义方式
+    
+    //1、没有返回值。没有参数的定义方式
+    void(^myBlock)(void) = ^{
+        
+        
+    };
+    //2、有返回值,有参数的定义方式
+    
+    int(^block)(int) = ^(int a){
+        
+       return a*3;
+    };
+    //3、有返回值,没有参数的定义方式
+    
+    int(^myBlock1)() = ^{
+        
+        return 100;
+    };
+    //当前，block也有自己属于自己的类型,就像在Objective-C中，字符串对象属于NSString类型一样，block类型的格式就是
+    //返回值类型(^)(参数类型)
+    
+    //也就是说,上面第一种定义方式的block类型就是void(^)()，myblock不是变量名，而是
+    //这种block类型的别名,在Objective-C中，可以使用typedef关键字定义block类型，也可以使用inline提示符自动生成block格式
+    
+    //typedef void (^myBlock123)(void);
+    
+    //使用inline提示符累自动生成block格式
+    
+   // <#returnType#>^<#blockName#>(<#parameterType#>) = ^(<#parameters#>){
+        
+        
+    //};
+    
+    //在ARC环境下是否需要copy关键字来修饰block
+    
+    //先要明确的是,block其实包含两个组成部分,一部分是block所执行的代码,这一部分在
+    //编译的时候已经确定,另一部分是block执行时所需要的外部变量值的数据结构，根据block
+    //在内存中的位置，系统将block分为3类
+    
+    
+    
+}
+
+-(void)test
+{
+    //1、NSGlobalBlock,该类型的block类似函数，内存地址位于内存全局区,只要block
+    //没有作用域中局部变量进行引用，此block会被系统设置为该类型
+    void(^gBlock)(int ,int) = ^(int a, int b){
+        
+        NSLog(@"a + b = %d",a + b);
+        
+    };
+    NSLog(@"%@",gBlock);
+    
+    //事实上，对于NSGlobalBlock类型的block,无需做更多的处理,不需要使用retain 和 copy进行修饰，即使使用了copy。系统也不会改变block的内存地址，操作时无效的
+    //2、NSStackBlock，该类型的block内存位于栈,其生命周期由函数决定,函数返回后将block无效
+    //在MRC环境下，若block内部引用了局部变量，此block就会被系统设置为该类型，
+    //对于NSStackBlock类的block,使用retain和release操作都是无效的，必须调用
+    //Block_copy()方法,或者使用copy进行修饰,其作用就是将block的内存从栈移到堆中
+    //此时block就会转变为NSMallocBlock类型,所以在ARC环境下，不需要手动使用copy关键字来修饰block
+    //3、NSMallocBlock，当对NSStackBlock类型的block进行copy操作后，block就会
+    //转为此类型，在MRC环境下，可以使用retain、release等方法手动管理此类型block的生命周期，在ARC环境下，系统会帮助管理此类型block的生命周期
+    //在block内如何修改block外部变量
+    
+    //在block内修改block外部变量会造成编译错误,提示缺少__block修饰，不可赋值，要想在
+    //在block内部修改block外部变量，则必须在外部定义变量时，前面加上__block修饰符
+    
+    //block外部变量
+    __block int var1 = 0;
+    int var2 = 0;
+    void(^block)(void) = ^{
+        
+        var1 = 100;
+        //编译错误,在block内部不可对var2赋值
+        //var2 = 1;
+    };
+    block();
+    NSLog(@"修改后的var1:%d",var1);//修改后var1为100
+    //block内部为何不能直接修改外部变量呢？
+    //因为当外部变量没有使用__block修饰符修饰时，block在截获外部自动变量时会在内部
+    //新创建一个新的变量var来保存所截获的外部瞬时值，新变量val成为block的成员变量(Objective-C也是对象),之后在block代码中修改的值是成员变量val值,而不是
+    //截获的外部变量值，所以外部变量的值不会受影响。此时，修改外部变量是先取值并赋值
+    //给成员变量val,然后修改val值,可用下面的代码模拟其原理,假设block对外部变量var
+    //进行了加1操作，block使用一个名为block的函数来表示
+    /*
+    int var = 1;
+    void block(){
+        int val = var;
+        val += 1;
+        
+    }
+   
+    
+    __block int var = 1;
+    void block(){
+        int *ptr = &var;
+        *Ptr += 1;
+        
+    };
+     */
+    //因此，block内部不可以直接修改外部变量,如果要修改外部变量,那么该外部变量必须使用
+    //__block修饰符进行修饰，否则编译器会直接进行报错提示
+    //需要注意的是，此时讨论的是自动变量，而静态变量由于默认传给block就是地址值，
+    //所以是可以直接修改的，另外，全局变量和静态全局变量由于作用域很广，也是可以在block中直接修改的，编译器也不会报错
+    
+}
+
+-(void)testBlock
+{
+   
+    
+    
+    self.myBlock = ^(){
+        
+      //其实注释的代码，同样会造成循环引用
+        NSString *localString = self.blockString;
+    };
+    //在上面的例子中，myBlock和self相互引用了对方,此时self的销毁依赖于myBlock
+    //的销毁，而myBlock销毁又依赖于self的销毁，这样就造成了循环引用，即使在外界已经没有任何指针能够访问到它们了，它们也无法释放
+    //解决循环引用的关键是断开引用链，在实际开发中，主要使用弱引用(weak reference)
+    //的方法来避免循环引用的产生，在ARC环境下，使用__weak修饰符定义一个__weak引用，并且在里面使用这个弱引用，使用这种方式对示例代码修改如下
+    __weak typeof(self)weakSelf = self;
+    self.myBlock = ^(){
+        
+      //其实注释的代码，同样会造成循环引用
+        NSString *localString = weakSelf.blockString;
+    };
+    //当使用了__weak修饰弱类型self时,block便不会再self的引用了，也就
+    //不会再产生循环引用了
+    //下面是不会造成循环引用的几种情况
+    //1、大部分GCD方法，示例代码如下
+    //使用GCD异步主列队任务
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self doSomething];
+    });
+    //在例子中，因为self并没有对GCD的block进行持有，只有block持有了self的引用
+    //所以不会造成循环引用
+    
+    //2、block作为临时变量，在这种情况下，同样self并没有持有block，所以也不会
+    //造成循环引用
+    
+    //3、block执行过程中self对象被释放，事实上，block的具体执行时间不确定，当block
+    //被执行的时候block中被__weak修饰的self对象有可能已经被释放了(例如:控制器对象
+    //已经被POP了)。当在并发执行了，涉及异步服务的时候，这种情况没有可能会出现
+    //对于这种情况，应该在block中使用__strong修饰符修饰self对象，使得在block期间
+    //对象持有，当block执行结束后，解除其持有，
+    /*
+    __weak typeof(self) weakSelf1 = self;
+    
+    self.myBlock() = ^(){
+        __strong typeof(self) strongSelf = weakSelf1;
+        NSString *localString = strongSelf.blockString;
+    };
+    */
+    //GCD有哪几种队列
+    
+    //串行队列:串行队列的任务按先后顺序逐个执行。通常用于同步访问一个特定
+    //的资源。使用dispatch_queue_creat，可以创建串行队列
+    //2、并发队列。在GCD中也称为全局并发队列，可以并发地执行一个或者
+    //多个任务，并发队列有高、中、低、后台4个优先级别，中级是默认级别
+    
+    
+    //线程间如何实现线程同步
+    
+    //NSOperation可以通过使用addDependency函数直接设置操作之间的依赖关系
+    //来调整操作之间的执行顺序从而实现线程同步，还可以使用setMaxConcurrentCount
+    //函数来直接设置并发控制最大并发数量，那么在GCD中如何实现呢？
+    
+    
+    
+}
+-(void)doSomething
+{
+    
+}
+
 @end

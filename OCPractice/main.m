@@ -1,8 +1,8 @@
 //
 //  main.m
-//  BasicPratice-Objective-C
+//  OCPractice
 //
-//  Created by liuningbo on 2021/2/21.
+//  Created by liuningbo on 2021/3/16.
 //
 
 #import <UIKit/UIKit.h>

@@ -1,17 +1,17 @@
 //
-//  BasicPratice_Objective_CUITests.m
-//  BasicPratice-Objective-CUITests
+//  OCPracticeUITests.m
+//  OCPracticeUITests
 //
-//  Created by liuningbo on 2021/2/21.
+//  Created by liuningbo on 2021/3/16.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface BasicPratice_Objective_CUITests : XCTestCase
+@interface OCPracticeUITests : XCTestCase
 
 @end
 
-@implementation BasicPratice_Objective_CUITests
+@implementation OCPracticeUITests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.

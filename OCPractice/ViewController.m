@@ -15,9 +15,9 @@
 #import "iOSDataPersistenceViewController.h"
 #import "iOSMemoryManagementViewController.h"
 #import "iOSMultiThreadViewController.h"
-#import "iOSOtherTopicViewController.h"
-#import "DataBaseViewController.h"
-#import "OperatingSystemViewController.h"
+//#import "iOSOtherTopicViewController.h"
+//#import "DataBaseViewController.h"
+//#import "OperatingSystemViewController.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSArray *dataSourceArray;
@@ -153,11 +153,13 @@
         iOSMemoryManagementViewController *vc = [[iOSMemoryManagementViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];
     }
+    
     else if (indexPath.row == 8){
         iOSMultiThreadViewController *vc = [[iOSMultiThreadViewController alloc] init];
         //vc.NavTitle = dic[@"Navtitle"];
         [self.navigationController pushViewController:vc animated:YES ];
     }
+    /*
     else if (indexPath.row == 9){
         iOSOtherTopicViewController *vc = [[iOSOtherTopicViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];
@@ -166,6 +168,7 @@
         OperatingSystemViewController *vc = [[OperatingSystemViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];
     }
-   
+   */
+    
 }
 @end

@@ -8,6 +8,7 @@
 #import "Student.h"
 
 @implementation Student
+/*
 - (NSString *)infomation
 {
     return [NSString stringWithFormat:@"student_name = %@ student_age = %d",self.person.name,self.person.age];
@@ -23,4 +24,6 @@
     NSSet *set = [NSSet setWithObjects:@"person.age",@"person.name", nil];
     return set;
 }
+ */
+
 @end

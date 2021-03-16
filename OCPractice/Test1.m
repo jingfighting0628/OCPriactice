@@ -8,7 +8,7 @@
 #import "Test1.h"
 #import <objc/runtime.h>
 @implementation Test1
-
+/*
 -(void)instanceMethod1
 {
     NSLog(@"instanceMethod1...");
@@ -28,6 +28,7 @@
 }
 + (void)load
 {
+    
     Class class = [self class];
     
     SEL selInsMethod1 = @selector(instanceMethod1);
@@ -96,4 +97,6 @@
     
     
 }
+ */
+
 @end

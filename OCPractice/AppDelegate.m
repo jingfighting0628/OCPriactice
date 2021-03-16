@@ -7,6 +7,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -16,7 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-  
+    //[UMConfigure initWithAppkey:@"605033156ee47d382b844826" channel:@"App Store"];
     if (@available(iOS 13.0, *)) {
      
        } else {
@@ -28,6 +29,8 @@
            [self.window makeKeyAndVisible];
            
        }
+    
+    //[[MyDevice shareInstance] setUncaughtExceptionHnadler] ;
     
     return YES;
 }

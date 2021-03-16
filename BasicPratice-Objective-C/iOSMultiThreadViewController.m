@@ -6,7 +6,7 @@
 //
 
 #import "iOSMultiThreadViewController.h"
-
+#import "Annimal.h"
 @interface iOSMultiThreadViewController ()
 
 @end
@@ -182,13 +182,13 @@
     
     dispatch_group_async(group, queue, ^{
         
-     //操作1
+     //加载图片操作1
     });
     dispatch_group_async(group, queue, ^{
-       //操作2
+       //加载图片操作2
     });
     dispatch_group_async(group, queue, ^{
-       //操作3
+       //加载图片操作3
     });
     dispatch_group_async(group, dispatch_get_main_queue(), ^{
        //后续操作
@@ -274,6 +274,110 @@
     
     //NSBlockOperation和NSInvocationOperation可以满足多数情况下的编程需求
     //如果需求特殊，那么需要继承NSOperation类自定义子类来更加灵活的实现
+    
+    //GCD和NSOperation的区别
+   //1、GCD是基于C语言的API NSOperation是对线程高度抽象提供OC接口
+    //2、NSOperation可以添加各个操作之间的依赖关系，GCD实现起来较复杂用(队列组、信号量)实现
+    //3、Objectice语言API面向对象(可封装、复用)控制精细灵活，用于复杂项目
+    //C语言API简单易读、代码精简控制较简单粗略用于简单项目
+    //4、NSOperation可以设置最大并发数，GCD不能
+    
+    
+    //什么是线程死锁
+    /*
+    int main (int argc ,const char *argv[]){
+        
+        NSLog(@"1");
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            NSLog(@"2");
+        });
+        NSLog(@"3");
+        return 0;
+    }
+     */
+    
+    //在上述代码中国呢,main函数第二句代码在主线程上使用了dispatch_sync同步向主线程派发任务，
+    //而同步派发要等到任务完成后才能返回，阻塞当前线程，也就睡说，执行到此，
+    //主线程被阻塞，同时又要等主线程执行完成该任务，造成主线程自身的等待循环
+    //也就是死锁，程序运行到此会崩溃，将dispatch_sync改为dispatch_async异步
+    //派发任务即可避免死锁或者将任务派发到其他队列上而不是主队列
+    
+    //dispatch_barrier_(a)sync的作用是什么
+    
+    //通过dispatch_barrier_async 添加的操作会赞数阻塞当前队列，即等待前面的并发操作
+    //都完成后执行该阻塞操作，待其完成后后面并发操作才可继续，可以将其比喻为
+    //一根霸道的独木桥、是并发队列中的一个并发障碍点，或者说是中间瓶颈，临时阻塞并独占，
+    //注意:dispatch_barrier_async 只有在并发队列中才能起作用，在串行队列中队列
+    //本身就是独木桥，将失去意义
+    
+    //创建并发队列
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("test.concurrent.queue", DISPATCH_QUEUE_CONCURRENT);
+    
+    // 添加两个并发操作A和B，即A和B会并发执行
+    
+    dispatch_async(concurrentQueue, ^{
+        NSLog(@"OperationA");
+    });
+    
+    dispatch_async(concurrentQueue, ^{
+        NSLog(@"OperationB");
+    });
+    
+    dispatch_barrier_async(concurrentQueue, ^{
+        NSLog(@"OperationBarrier");
+    });
+    //继续添加并发操作C和D，要等待barrier障碍操作结束后才能开始
+    dispatch_async(concurrentQueue, ^{
+       
+        NSLog(@"OperationC");
+    });
+    dispatch_async(concurrentQueue, ^{
+       
+        NSLog(@"OperationD");
+    });
+    
+    //如何理解线程安全
+    //在实际开发中，如果程序中使用了多线程技术，那么有可能会遇到同一块资源被多个线程
+    //共享情况，也就是多个线程可能会访问同一块资源，如多个线程同一块资源时，很容易
+    //会发生数据错误及数据不安全等问题
+    //要避免这种因争夺资源而导致的数据安全问题、需要使用“线程锁”来解决，即在同一时间段内，只允许一个线程来使用资源，在iOS开发中主要使用几种线程锁技术
+    
+    //1、使用@synchironized关键字
+    //使用@synchironized能够很方便的隐式创建锁对象
+    [self testSynchronized];
+    //2、NSLock
+    
+    
+}
+-(void)testSynchronized {
+    
+    Annimal *someone = [Annimal new];
+    
+    //线程A
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+       
+        @synchronized (someone) {
+            NSLog(@"线程A = %@",[NSThread currentThread]);
+            someone.name = @"口";
+            [NSThread sleepForTimeInterval:5];
+        }
+    });
+    
+    //线程B
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+       
+        @synchronized (someone) {
+            NSLog(@"线程B = %@" , [NSThread currentThread]);
+            someone.name = @"";
+        }
+    });
+    
+    
+    //可以发现发现B访问资源的时间比线程A要晚5s 关键字synchronized将实例
+    //对象someone设定为锁的唯一标识,只有标识相同时，才满足互斥，如果线程B
+    //中的锁标识改为其他对象，那么线程B将不会被阻塞
     
     
 }

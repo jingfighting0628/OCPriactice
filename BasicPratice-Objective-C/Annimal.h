@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Annimal : NSObject
+@property (nonatomic, copy) NSString *name;
 //父类接口 动物的叫声
 - (void) shout;
 

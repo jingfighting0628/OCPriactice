@@ -664,9 +664,128 @@ typedef void (^block)();
     //NSOperation可以通过使用addDependency函数直接设置操作之间的依赖关系
     //来调整操作之间的执行顺序从而实现线程同步，还可以使用setMaxConcurrentCount
     //函数来直接设置并发控制最大并发数量，那么在GCD中如何实现呢？
+    //GCD 实现线程同步的方法有以下3种
+    //1、组队列 dispatch_group
+    //2、阻塞任务 dispatch_barrier_(a)sync
+    //3、信号量机制 dispatch_semaphore
+    //信号量机制主要是通过设置有限的资源数量来控制线程的最大并发数量及阻塞线程实现
+    //线程同步等
+    //GCD 中使用信号量需要用到3个函数
+    //1、dispatch_semaphore_creat 用来创建一个semaphore信号量并设置初始信号量的值
+    //2、dispatch_semaphore_signal 发送一个信号量增加1(对应PV操作的V操作)
+    //3、dispatch_semaphore_wait 等待信号使信号量减1(对应PV操作的P操作)
     
+    //那么如何通过信号量来实现同步呢？下面介绍GCD信号量来实现任务之间的依赖和
+    //最大并发任务数量的控制
+    //引申1、使用信号量实现任务2依赖任务1，即任务2要等任务结束才执行
+    //方法很简单，创建信号量并初始化为0，让任务2执行前等待信号，实现对任务2的阻塞，
+    //然后任务1完成后再发送信号，从而任务2获得信号开始执行，需要注意的是，这里的任务12
+    //和任务2都是异步提交的，如果没有信号量的阻塞，那么任务2时不会等待任务1的，实际上
+    //这里使用信号量实现了两个任务的同步
     
+    //创建一个信号量
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    //任务1
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        [NSThread sleepForTimeInterval:3];
+        NSLog(@"任务1结束");
+        //任务1结束，发送信号告诉任务2可以开始了
+        dispatch_semaphore_signal(semaphore);
+    });
+    //任务2
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       //等待任务1结束后获得信号量，无限等待
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        //如果获得信号量，那么开始任务2
+        NSLog(@"任务2开始");
+        [NSThread sleepForTimeInterval:3];
+        NSLog(@"任务2结束");
+    });
+    [NSThread sleepForTimeInterval:10];
+    //引申2:通过信号量控制最大并发量
+    //通过信号量控制最大并发数量的方法为:创建信号并 初始化信号量为想要的控制的最大并发
+    //数量，例如想要保证最大并发数5,则信号量初始化为5，然后每个新任务执行前进行P操作，
+    //等待信号量减1，每个任务结束后进行V操作，发送信号使信号量加1，这样即可保证信号量
+    //始终在5以内，当前最多也只有5个以内的任务在并发执行
+    //创建一个信号量并初始化为5
+    dispatch_semaphore_t semaphore1 = dispatch_semaphore_create(5);
     
+    //模拟1000个等待执行的任务，通过信号量最大并发任务数量为5
+    
+    for (int i = 0; i < 1000; i++) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+           
+            dispatch_semaphore_wait(semaphore1, DISPATCH_TIME_FOREVER);
+            NSLog(@"任务%d开始",i);
+            [NSThread sleepForTimeInterval:10];
+            NSLog(@"任务%d结束",i);
+            //任务i结束，发送信号释放一个资源
+            dispatch_semaphore_signal(semaphore1);
+        });
+    }
+    [NSThread sleepForTimeInterval:1000];
+    //GCD 多线程编程中什么时候会创建新线程
+    //对于是否会开启新线程的情景主要有如下几种情况:串行队列中提交异步任务、串行队列中
+    //提交同步任务、并发队列中提交异步任务、并发队列中提交同步任务(其中主队列是典型的串行
+    //队列，全局队列是典型的并发队列)
+    //创建一个串行队列
+    
+    dispatch_queue_t serialQueue = dispatch_queue_create("serialQueue", DISPATCH_QUEUE_SERIAL);
+    
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("concurrentQueue", DISPATCH_QUEUE_CONCURRENT);
+    
+    //1、串行队列中提交同步任务。不会开启新线程，直接在当前线程同步地串行这些任务
+    
+    //串行队列添加同步任务，没有开启新线程，全部在主线程串行执行
+    dispatch_sync(serialQueue, ^{
+        NSLog(@"SERIAL_SYN_A:%@",[NSThread currentThread]);
+    });
+    dispatch_sync(serialQueue, ^{
+        NSLog(@"SERIAL_SYN_B:%@",[NSThread currentThread]);
+    });
+    dispatch_sync(serialQueue, ^{
+        NSLog(@"SERIAL_SYN_C:%@",[NSThread currentThread]);
+    });
+    //2、串行队列中提交异步任务:会开启一个新线程，在新子线程中异步德串行执行这些任务
+    //串行队列添加异步任务:开启一个新线程，在新子线程异步地串行执行这些任务
+    
+    dispatch_async(serialQueue, ^{
+        
+        NSLog(@"SERIAL_ASYN_A:%@",[NSThread currentThread]);
+    });
+    dispatch_async(serialQueue, ^{
+        
+        NSLog(@"SERIAL_ASYN_B:%@",[NSThread currentThread]);
+    });
+    dispatch_async(serialQueue, ^{
+        
+        NSLog(@"SERIAL_ASYN_C:%@",[NSThread currentThread]);
+    });
+    //3、并发队列中提交同步任务，不会开启新线程，效果和"串行队列中提交同步任务"一样
+    //直接在当前线程同步地串行执行这些任务
+    
+    dispatch_sync(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_SYN_A:%@",[NSThread currentThread]);
+    });
+    dispatch_sync(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_SYN_B:%@",[NSThread currentThread]);
+    });
+    dispatch_sync(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_SYN_C:%@",[NSThread currentThread]);
+    });
+    //4、并发队列中提交异步任务，会开启多个子线程，在子线程异步地并发执行
+    //并发队列添加异步任务、开启多个子线程，并发执行多个任务
+    dispatch_async(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_ASYN_A:%@",[NSThread currentThread]);
+    });
+    dispatch_async(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_ASYN_B:%@",[NSThread currentThread]);
+    });
+    dispatch_async(concurrentQueue, ^{
+        NSLog(@"CONCURRENT_ASYN_C:%@",[NSThread currentThread]);
+    });
 }
 -(void)doSomething
 {

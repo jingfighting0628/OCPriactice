@@ -790,6 +790,85 @@ typedef void (^block)();
 -(void)doSomething
 {
     
+    
+    //iOS中如何触发定时任务或延时任务
+    //1、performSelector 实现延时任务
+    //延时任务可以通过当前UIViewController的performSelector隐式
+    //创建子线程实现，不会阻塞主线程
+    [self performSelector:@selector(task) withObject:nil afterDelay:10];
+    
+    //2、利用sleep实现后面的任务的等待
+    //慎用，会阻塞主线程
+    //[NSThread sleepForTimeInterval:10];
+    //3、GCD 实现延时任务或定时任务
+    
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC);
+    
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+       
+        //delay task
+    });
+    //GCD 还可以用来实现定时器的功能,还能设置延时开启计时器，使用中注意一定
+    //定义强引用指针来指向计时器对象才可以让计时器生效。
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _time = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    //dispatch_source_t when = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
+    //4、NSTimer实现定时任务
+    //NSTimer 主要用于开启定时任务,但要正确使用才能保证它能够正常有效德运行
+    //尤其要注意两点
+    //1、确保NSTimer已经添加到当前RunLoop
+    //2、确保当前RunLoop已经启动
+    //创建NSTimer有两种方法
+    
+  NSTimer *mainThreadTimer =   [NSTimer timerWithTimeInterval:10 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            
+    }];
+    
+    [NSTimer scheduledTimerWithTimeInterval:10 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        
+    }];
+    //这两个方法主要区别为:使用timerWithTimeInterval创建timer不会自动添加到档期啊RunLoop
+    //需要手动添加并指定RunLoo的模式，
+    [[NSRunLoop currentRunLoop] addTimer:mainThreadTimer forMode:NSDefaultRunLoopMode];
+    //而使用scheduledTimerWithTimeInterval创建的RunLoop会默认添加到当前RunLoop中
+    
+    //5、CADisplaylink实现定时任务
+    
+    //CADisplaylink实现定时器与屏幕刷新频率绑定在一起,是一种帧率刷新，适用于界面不断重绘
+    //(例如流畅动画和视频播放),CADisplaylink以特定模式注册到RunLoop后，每当屏幕显示
+    //内容刷新结束后就会向CADisplaylink指定的target发送一次消息,实现target的每帧调用
+    //根据需求也可以这只每几帧调用一次,默认每帧都调用。另外，通过CADisplaylink还可以获取
+    //帧率和时间等信息
+    
+    //CADisplaylink实现的定时器精度非常高,但如果调用的方法十分耗时,超过一帧的时间间隔，
+    //那么会导致跳帧，跳帧次数取决于CPU的忙碌程度
+    
+    CADisplayLink *displaylink = [CADisplayLink displayLinkWithTarget:self selector:@selector(display_SEL)];
+    
+    //添加到当前运行的RunLoop中启动
+    [displaylink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    //暂停,继续对selector的调用
+    [displaylink setPaused:YES];
+    [displaylink setPaused:NO];
+    //设置每几帧调用一次selector,默认为1
+    [displaylink setPreferredFramesPerSecond:2];
+    //移除,不再使用
+    [displaylink invalidate];
+    displaylink  = nil ;
+    //如何解决网络请求的依赖关系
+    //1、一种是通过线程管理来实现,即线程同步,让线程等待线程A,iOS中实现线程同步
+    //的方法很多;可以设置NSOperation操作依赖实现，即让操作B依赖操作A，操作B会在
+    //操作A结束后才会开始执行(B addDependency:A),也可以GCD来实现,包括组队列(dispatch_group)
+    // 阻塞任务(dispatch_barrier_(a)sync)和信号量机制(dispatch_semaphore)
+    //2、另外也可以直接通过逻辑衔接来实现，即在网络请求A的响应回调中编写网络请求B
+    //的逻辑，缺点是耦合度上会高一些。
+    
+    
+    
 }
+
+
 
 @end

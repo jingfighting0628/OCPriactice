@@ -15,7 +15,7 @@
 #import "iOSDataPersistenceViewController.h"
 #import "iOSMemoryManagementViewController.h"
 #import "iOSMultiThreadViewController.h"
-//#import "iOSOtherTopicViewController.h"
+#import "iOSOtherTopicViewController.h"
 //#import "DataBaseViewController.h"
 //#import "OperatingSystemViewController.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -67,7 +67,9 @@
                           @{@"ClassName":@"iOSMultiThreadViewController",
                             @"Navtitle":@"iOS中的网络和多线程编程"
                           },
-                          
+                          @{@"ClassName":@"iOSOtherTopicViewController",
+                            @"Navtitle":@"其他话题"
+                          },
                           @{@"ClassName":@"DataBaseViewController",
                             @"Navtitle":@"数据库"
                           },
@@ -159,11 +161,12 @@
         //vc.NavTitle = dic[@"Navtitle"];
         [self.navigationController pushViewController:vc animated:YES ];
     }
-    /*
+   
     else if (indexPath.row == 9){
         iOSOtherTopicViewController *vc = [[iOSOtherTopicViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];
     }
+    /*
     else if (indexPath.row == 10){
         OperatingSystemViewController *vc = [[OperatingSystemViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];

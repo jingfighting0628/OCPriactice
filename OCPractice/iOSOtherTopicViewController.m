@@ -7,9 +7,11 @@
 
 #import "iOSOtherTopicViewController.h"
 #import <ReactiveObjC/ReactiveObjC.h>
+#import "UIView+WebCache.h"
 @interface iOSOtherTopicViewController ()
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIButton *myButton;
+@property (nonatomic, strong) UIImageView *imageView;
 @end
 
 @implementation iOSOtherTopicViewController
@@ -21,6 +23,8 @@
     [self RAC];
     //设计模式
     [self designPattern];
+    //第三方
+    [self theThird];
     
 }
 -(void)RAC
@@ -128,6 +132,10 @@
         NSLog(@"button Click one");
         }];
     //以上代码的功能使用 throttle (节流) 方法 ,实现 2s 内，多次单击按钮只响应最后一次的单击事件
+    
+    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 230, size.width - 100, 40)];
+    [self.view addSubview:_imageView];
+    
     
 }
 
@@ -310,5 +318,121 @@
     
     
 }
-
+- (void)theThird
+{
+    //在iOS开发中第三方框架非常丰富，种类和数量繁多，对于第三方框架的掌握不可能面面俱到
+    //iOS求职者要根据需要去学习框架，事实上，框架的使用相对比较简单的，所谓框架其实都是
+    //对每一类功能的封装，作为快捷使用的开发工具，最常用的包括网络请求类的、本地数据库的、进度条显示的
+    //图片处理加载类的、UI特效的、基于表格列表的及数据解析的等。iOS求职者应该掌握一些基本的必备框架
+    //如AFNetWorking、SDWebImage、MJExtension、MJRefresh、MBProgressHUD、FMDB等
+    
+    //面试iOS求职者可能会被问到看过哪些优秀的第三方库的源代码，从中学习到什么，例如SDWWebImage
+    //中的二级缓存流程是如何实现的，大致架构师怎样的，接口如何设计等等
+    //因此，建议选择几个优秀的框架研究学习它们的源代码，同时也是提高代码设计和加深原理理解的捷径
+    //以下是比较常见优秀的框架
+    //MJExtension 数据解析序列化和反序列化
+    //AFNetworking 网络请求框架
+    //MBProgress 进度显示组件
+    //FMDB SQLite封装的数据库
+    //SDWebImage 图片异步加载框架
+    //AsncDisPlayKit 流畅的异步加载UI库
+    //Charts 漂亮的图标绘制库
+    //CocoaAsyncSocket 异步Socket网络编程框架
+    //CocoaLumberjack 简单高效快速灵活的登录模块框架
+    //DNZEmptyDataSet 空列表UI库，当数据为空视图没有内容的友好的界面展示库
+    //fastlane 自动化工具库，自动构建发布iOS应用
+    //FSCalendar:iOS7+的日历控件，支持Objective-C和Swift
+    //JazzHands:快速搭建应用滑动引导页的动画框架
+    //Kiwi:iOS单元测试框架
+    //JSPatch:热修复
+    
+    //SDWebImage是什么？加载图片的原理是什么？
+    //SDWebImage是一个针对图片加载的插件库，提供了一个支持缓存的用于异步加载图片
+    //的下载工具，特别为常用UI元素:UIImage、UIButton和MKAnnotationView提供
+    //了类别扩展，可以作为一个很方便的工具，其中:SDWebImagePrefetcher可以预先下载图片
+    //方便后续使用
+    //SDWebImage的几个特性
+    //1、为UIImageView、UIButton、和MKAnnotationView进行了类别扩展，添加了
+    //Web图片和缓存管理
+    //2、是一个异步图片下载器
+    //3、异步的内存+硬盘二级缓存及自动的缓存过期处理
+    //4、后台图片解压缩功能
+    //5、可以保证相同的URL(图片的检索Key)不会被重复多次下载
+    //6、可以保证假的无效URL不会不断尝试去加载
+    //7、性能高
+    //8、使用GCD和ARC
+    //支持的图片格式
+    //1、UIImage支持图片格式有JPEG、PNG等，包括GIF都可以被支持
+    //2、Web图片格式，包括动态Web图片(使用WebP subsepec)
+    //使用方法示例
+    //SDWebImage的使用非常简单，开发中需要的主要就是为了一个UIImageView添加在图片
+    //用到的方法主要就是sd_setImageWithURL方法(新版本方法名都加了sd前缀)
+    //sd_setImageWithURL方法提供了几种重栽方法，包括只使用图片URL参数，以及
+    //设置占位图片placeholderImage参数的等，这个方法也是框架封装的最顶层的应用方法
+    //开发中实际主要就用这个方法，以这个方法为入口,可以层层打开往底层看，可以对应到SDWebImage
+    //整个加载逻辑和流程
+    
+    
+    
+    //SDWebImage加载图片的流程原理
+    //SDWebImage异步加载图片的使用非常简单，一个方法调用即可完成，但实际上这个方法
+    //的调用会使得框架立刻完成一系列的逻辑处理，以最高效的方式加载需要的图片。
+                         // 显示占位图片
+                        //      ｜
+                       // 根据URL从内存缓存中查找图片
+                       //       ｜
+                       //        ————找到————————————————>取出显示图片
+                       //       ｜
+                       //      没找到
+                       //       ｜
+                       //   根据URL去硬盘缓存找图片——找到——加载图片到内存缓存—>取出图片显示图片
+                       //       |
+                       //      没找到
+                       //       |
+                       //     下载图片
+                       //       ｜
+                       //     下载完成
+                       //       ｜
+                       //     图片解码
+                       //       ｜
+                       //     解码完成
+                       //       ｜
+                //       显示图片、将图片保存到内存和硬盘缓存
+    
+    
+    //根据流程可以知道，图片的加载采用了一种二级缓存机制，简单概括的意思是:能从内存缓存
+    //直接取就从内存缓存取，内存缓存没有就去硬盘缓存里取，再没有就根据的URL到网上下载(下载会慢很多)
+    //下载的图片还有一个解码的过程，解码后就可以直接用了，另外下载的图片会保存到内存缓存和硬盘缓存
+    //从而下次再取同样的图片就可以直接取了而不用重复下载
+    
+    //上面的整个流程对应到SDWebImage框架内部，依次挖掘出下面几个关键方法，最外层的程序员直接调用的sd_setImageWithURL方法，以此方法为入口依次可能会调用到后面的方法，来完成上面的
+    //的整个优化加载流程，这里以其中一个入口方法为例
+    //1、sd_setImageWithURL
+    //UIImageView(WebCache)的sdImageWithURL方法只是个UIView的类扩展接口方法
+    //负责调用并将参数传给UIView(WebCache)的sdinternalSetImageWithURL方法，参数这里
+    //有图片URL和placeHolder占位图片
+    //2、sd_internalSetImageWithURL
+    //UIView(WebCache)的sd_internalSetImageWithURL方法先将placeholeder占位图片异步显示
+    //然后给SDWebImageManager单例发送loadImageWithURL消息，传给它URL参数让其再给它的SDImageCache对象发送queryCacheOperationForkey消息先从本地搜索缓存图片
+    //3、loadImageWithURL
+    //收到loadImageWithURL消息后，SDWebImageManager单例向SDImageCache对象
+    //发送queryCacheOperationForKey消息开始在本地搜索图片，SDImageCache对象先对自己发送imageFromQueryCompletedBlock回调返回，否则再对自己发送diskImageForKey消息去硬盘搜索图片，搜到则取出图片通过SDCacheQueryCompletedBlock回调返回，内存和硬盘都不到，则只好重新下载
+    //4、downloadImageWithURL
+    //如果本地搜索失败，那么SDWebImageManager会新建一个SDWebImageDownloader下载器，并向下载器发送downloadImageWithURL消息开始下载网络图片:下载成功并
+    //解码后一方面将图片缓存到本地，另一方面取出图片进行显示，其中，像图片下载以及图片解码耗时操作都是异步执行，不会拖慢主线程
+    
+    //SDImageCache在初始化的时候会注册一些消息通知，在内存警告或退出到后台会清理内存图片缓存，应用结束后的时候会自动清理掉过期的图片
+    
+    //面试题:SDWebImage的框架结构是怎么样的？
+    //SDWebImage框架的3个核心组件
+    //1、SDWebImageManager核心管理器
+    //2、SDWebCache 缓存处理组件，主要对下载的图片进行内存缓存和磁盘缓存处理
+    //3、SDWebImageDownloader｜SDWebImageDownloaderOperation 下载处理组件
+    //主要在子线程发送异步网络请求下载图片以及其他相关操作
+    //面试题:网络图片处理问题中怎么解决一个相同的网络地址重复请求的问题？
+    //可以通过建立一个以图片下载地址为key,以下载操作为value的字典，图片地址是唯一的
+    //可以保证key值唯一，当需要加载该图片时，先根据key值去本地缓存中找，看该图片是否已经下载，如果key值匹配，那么直接从本地图片资源从而避免重复下载操作，如果本地找不到，那么需要根据key值中的网络图片地址重新去网络上下载
+    
+    
+}
 @end

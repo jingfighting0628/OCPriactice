@@ -111,6 +111,7 @@
 		C12BAFB92602EFF5001CA962 /* SDDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C12BAF732602EFF5001CA962 /* SDDisplayLink.m */; };
 		C12BAFBA2602EFF5001CA962 /* SDAsyncBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C12BAF752602EFF5001CA962 /* SDAsyncBlockOperation.m */; };
 		C12BAFBB2602EFF5001CA962 /* SDAssociatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C12BAF762602EFF5001CA962 /* SDAssociatedObject.m */; };
+		C1D78823267746E100FA03DB /* EffectiveObjective-C2.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D78822267746E100FA03DB /* EffectiveObjective-C2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,6 +403,8 @@
 		C12BAF742602EFF5001CA962 /* SDImageAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageAssetManager.h; sourceTree = "<group>"; };
 		C12BAF752602EFF5001CA962 /* SDAsyncBlockOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAsyncBlockOperation.m; sourceTree = "<group>"; };
 		C12BAF762602EFF5001CA962 /* SDAssociatedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAssociatedObject.m; sourceTree = "<group>"; };
+		C1D78821267746E100FA03DB /* EffectiveObjective-C2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EffectiveObjective-C2.h"; sourceTree = "<group>"; };
+		C1D78822267746E100FA03DB /* EffectiveObjective-C2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "EffectiveObjective-C2.m"; sourceTree = "<group>"; };
 		EC797AA372ACFCFB80AFE5CD /* Pods-OCPractice-OCPracticeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCPractice-OCPracticeUITests.release.xcconfig"; path = "Target Support Files/Pods-OCPractice-OCPracticeUITests/Pods-OCPractice-OCPracticeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F01550F9E95CA48223D9119D /* Pods_OCPractice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OCPractice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -501,6 +504,8 @@
 				C10DC50226009EA9009323BE /* SceneDelegate.m */,
 				C10DC50326009EA9009323BE /* ViewController.h */,
 				C10DC51126009EA9009323BE /* ViewController.m */,
+				C1D78821267746E100FA03DB /* EffectiveObjective-C2.h */,
+				C1D78822267746E100FA03DB /* EffectiveObjective-C2.m */,
 				C10DC5282600A083009323BE /* Person.h */,
 				C10DC5272600A083009323BE /* Person.m */,
 				C10DC52D2600A0C7009323BE /* Student.h */,
@@ -1075,6 +1080,7 @@
 				C12BAF7E2602EFF5001CA962 /* SDImageIOAnimatedCoder.m in Sources */,
 				C10DC52226009EAA009323BE /* iOSDataPersistenceViewController.m in Sources */,
 				C12BAFA32602EFF5001CA962 /* NSData+ImageContentType.m in Sources */,
+				C1D78823267746E100FA03DB /* EffectiveObjective-C2.m in Sources */,
 				C10DC52026009EAA009323BE /* ViewController.m in Sources */,
 				C10DC4D026009E2B009323BE /* OCPractice.xcdatamodeld in Sources */,
 				C12BAFB62602EFF5001CA962 /* SDInternalMacros.m in Sources */,

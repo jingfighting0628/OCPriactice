@@ -16,6 +16,7 @@
 #import "iOSMemoryManagementViewController.h"
 #import "iOSMultiThreadViewController.h"
 #import "iOSOtherTopicViewController.h"
+#import "EffectiveObjective-C2.h"
 //#import "DataBaseViewController.h"
 //#import "OperatingSystemViewController.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -76,6 +77,9 @@
                           @{@"ClassName":@"OperatingSystemViewController",
                             @"Navtitle":@"操作系统"
                           },
+                          @{@"ClassName":@"EffectiveObjective-C2",
+                            @"Navtitle":@"EffectiveObjective-C2.0编写高质量iOS与OSX代码的52个方法"
+                          }
     ];
     
    
@@ -165,6 +169,10 @@
     else if (indexPath.row == 9){
         iOSOtherTopicViewController *vc = [[iOSOtherTopicViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES ];
+    }
+    else if (indexPath.row == 12){
+        EffectiveObjective_C2 *vc = [[EffectiveObjective_C2 alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     /*
     else if (indexPath.row == 10){

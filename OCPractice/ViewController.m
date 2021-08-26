@@ -17,6 +17,7 @@
 #import "iOSMultiThreadViewController.h"
 #import "iOSOtherTopicViewController.h"
 #import "EffectiveObjective-C2.h"
+#import "OCBaseApIViewController.h"
 //#import "DataBaseViewController.h"
 //#import "OperatingSystemViewController.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -79,7 +80,10 @@
                           },
                           @{@"ClassName":@"EffectiveObjective-C2",
                             @"Navtitle":@"EffectiveObjective-C2.0编写高质量iOS与OSX代码的52个方法"
-                          }
+                          },
+                          @{@"ClassName":@"OCBaseApIViewController",
+                            @"Navtitle":@"OC底层探索(runtime、RunLoop、多线程等)"
+                          },
     ];
     
    
@@ -172,6 +176,10 @@
     }
     else if (indexPath.row == 12){
         EffectiveObjective_C2 *vc = [[EffectiveObjective_C2 alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (indexPath.row == 13){
+        OCBaseApIViewController *vc = [[OCBaseApIViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     /*

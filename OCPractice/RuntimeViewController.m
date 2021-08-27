@@ -7,6 +7,7 @@
 
 #import "RuntimeViewController.h"
 #import <Objc/runtime.h>
+#import "Person1.h"
 @interface RuntimeViewController ()
 @property (nonatomic, strong) UIScrollView *myScrollView;
 @end
@@ -20,7 +21,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self test];
     [self testSEL];
-    [self forwardMessage1];
+    //[self forwardMessage1];
+    //[self forwardMessage2];
+    [self forwardMessage3];
     
 }
 //1、什么是Runtime？
@@ -223,25 +226,141 @@
 //class_addMethod(Class _Nullable cls, SEL _Nonnull name, IMP _Nonnull imp,
                 //const char * _Nullable types)
     //OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0, 2.0);
--(void)forwardMessage1
-{
-    [self performSelector:@selector(fun)];
-    //控制台打印NSLog(@"new funcMethod");
-}
-+(BOOL)resolveInstanceMethod:(SEL)sel
-{
-    if (sel == @selector(fun)) {
-        class_addMethod([self class], sel, (IMP)funcMethod, "v@:");
-        return  YES;
-    }
-    return  [super resolveInstanceMethod:sel];
-}
-void funcMethod (id objc,SEL _cmd){
-    NSLog(@"new funcMethod");
-}
+//-(void)forwardMessage1
+//{
+//    [self performSelector:@selector(fun)];
+//    //控制台打印NSLog(@"new funcMethod");
+//}
+//+(BOOL)resolveInstanceMethod:(SEL)sel
+//{
+//    if (sel == @selector(fun)) {
+//        class_addMethod([self class], sel, (IMP)funcMethod, "v@:");
+//        return  YES;
+//    }
+//    return  [super resolveInstanceMethod:sel];
+//}
+//void funcMethod (id objc,SEL _cmd){
+//    NSLog(@"new funcMethod");
+//}
 //从上面的例子中，我们可以看出，虽然我们没有实现func方法，但是通过重写resolveInstanceMethod:，利用class_addMethod方法添加对象方法实现funcMethod方法，并执行。从打印的结果来看，我们成功调起了funcMethod方法。
 //大家也注意到了class_addMethod中types这个参数的传入比较特殊。这里大家可以参考官方文档中关于Type Encodings的说明。「官方文档」
 //官方文档地址:https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100
+//4.2 消息接受者重定向
+//如果上一步中+resolveInstanceMethod: 或者 +resolveClassMethod:没有添加其他函数实现，运行时就会进行下一步：消息接受者重定向。
+
+//如果当前对象实现了-forwardingTargetForSelector: 或者 +forwardingTargetForSelector:方法，·Runtime·就会调用这个方法，允许我们将消息的·接受者·转发给其他对象。
+
+//其中用到的方法如下
+/////重定向类方法的消息接受者，返回一个类或实例对象
+//+ (id)forwardingTargetSelector:(SEL)aSelector;
+///重定向实例方法的消息接受者，返回一个类或实例对象
+//- (id)forwardingTargetSelector:(SEL)aSelector;
+//注意：
+//1、类方法 和 实例方法，所对应的·消息接受接重定向·，使用的是两个不同的方法，一个是+，一个是-。
+//2、这里+resolveInstanceMethod: 或者 +resolveClassMethod:无论返回值是YES还是NO，只要其中没有添加其他函数的实现，运行时都会进行下一步。
+//-(void)forwardMessage2
+//{
+//    [self performSelector:@selector(func)];
+//}
+//+(BOOL)resolveInstanceMethod:(SEL)sel
+//{
+//    return YES;
+//}
+//-(id)forwardingTargetForSelector:(SEL)aSelector
+//{
+//    if (aSelector == @selector(func)) {
+//        return [[Person1 alloc]init];//返回Person对象，让Person对象去接受这个消息
+//    }
+//    return [super forwardingTargetForSelector:aSelector];
+//}
+//可以看到，虽然当前ViewController没有实现func方法，+resolveInstanceMethod:也没有添加其他函数实现。但是我们通过forwardingTargetSelector把当前ViewController的方法转发给了Person对象去执行了。打印结果也证明了我们成功实现了转发。
+
+//我们通过forwardingTargetSelector可以修改消息的接受者，该方法返回参数是一个对象，如果这个对象不是nil，也不是self，系统会将运行的消息转发给这个对象执行。否则，继续进行下一步：消息重定向
+//4.3
+//如果经过消息动态解析、消息接受者重定向，Runtime系统还是找不到相应的方法实现，从而无法相应消息，Runtime系统会利用-methodSignatureForSelector: 或者 +methodSignatureForSelector:方法获取函数的参数和返回值类型。
+
+//如果methodSignatureForSelector返回了一个NSMethodSignature对象（函数签名），Runtime系统就会创建一个NSInvocation对象，并通过forwardInvocation:消息通知当前对象，给予此次消息发送最后一次寻找IMP的机会。
+//如果methodSignatureForSelector返回nil。则Runtime系统会发出doesNotRecognizeSelector消息，程序也就崩溃了。
+//所以我们可以在forwardInvocation方法中对消息进行转发。
+//注意：类方法 和 对象方法 消息转发第三步调用的方法同样不一样。
+/*
+类方法的调用：
+1、+ methodSignatureForSelector:
+2、+ forwardInvocation:
+3、+ doesNotRecognizeSelector:
+
+对象方法的调用：
+1、- methodSignatureForSelector:
+2、- forwardInvocation:
+3、- doesNotRecognizeSelector:
+*/
+////获取对象方法函数的参数和返回值类型，返回签名
+//- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector OBJC_SWIFT_UNAVAILABLE("");
+///对象方法消息重定向
+//- (void)forwardInvocation:(NSInvocation *)anInvocation OBJC_SWIFT_UNAVAILABLE("");
+
+///获取类方法函数的参数和返回值类型，返回签名
+//+ (NSMethodSignature *)instanceMethodSignatureForSelector:(SEL)aSelector OBJC_SWIFT_UNAVAILABLE("")
+///类方法消息重定向
+//+ (void)forwardInvocation:(NSInvocation *)anInvocation OBJC_SWIFT_UNAVAILABLE("");
+-(void)forwardMessage3
+{
+    [self performSelector:@selector(func)];
+}
++(BOOL)resolveInstanceMethod:(SEL)sel
+{
+    return YES;///为了进行下一步 --> 消息接受者重定向
+}
+-(id)forwardingTargetForSelector:(SEL)aSelector
+{
+    return nil;
+}
+-(NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+    if ([NSStringFromSelector(aSelector)isEqualToString:@"func"]) {
+        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
+    }
+    return [super methodSignatureForSelector:aSelector];
+}
+-(void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    SEL sel = anInvocation.selector;///从 anInvocation 中获取消息
+    Person1 *p = [[Person1 alloc] init];
+    if ([p respondsToSelector:sel]) {///判断 Person 对象方法是否可以响应 sel
+        [anInvocation invokeWithTarget:p]; ///若可以响应，则将消息转发给其他对象处理
+    } else {
+        [self doesNotRecognizeSelector:sel];//若仍然无法响应，则报错，找不到响应方法
+    }
+}
+//可以看到，我们在-forwardInvocation:方法里面让Person对象执行了func函数。
+
+//既然-forwardingTargetForSelector: 和 -forwardInvocation:都可以将消息转发给其他对象处理，那么两者之间的区别是什么？
+//区别在于-forwardingTargetForSelector:只能将消息转发给一个对象；而-forwardInvocation:可以将消息转发给多个对象。
+
+//以上就是Runtime消息转发的整个流程。
+
+//5、消息发送以及转发机制总结
+//调用[receiver selector];后，进行的流程：
+
+//编译阶段：[receiver selector];方法被编译器转换为：
+
+//Objc_msgSend(receiver, selector) --- 不带参数
+//Objc_msdSend(receiver, selector, org1, org2, ...) --- 带参数
+//运行时阶段：消息接受者receiver寻找对应的selector
+
+//通过receiver的isa 指针找到receiver的Class (类)；
+//在Class (类)的cache (方法缓存)的散列表中寻找对应的IMP (方法实现)；
+//如果在cache (方法缓存)中没有找到对应的IMP (方法实现)的话，就继续在Class (类)的method list (方法列表)中找对应的selector，如果找到，填充到cache (方法缓存)中，并返回selector；
+//如果在class (类)中没有找到这个selector，就继续在它的superclass (父类)中寻找；
+//一旦找到对应的selector，直接执行receiver对应的selector方法实现的IMP (方法实现)。
+//若找不到对应的selector，Runtime系统进入消息转发机制。
+//运行时消息转发阶段：
+//1、动态解析：通过重写+resolveInstanceMethod: 或者 +resolveClassMethod:方法，利用class_addMethod方法添加其他函数实现；
+//2、消息接受者重定向：如果上一步没有添加其他函数实现，可在当前对象中利用forwardingTargetForSelector:方法将消息的接受者转发给其他对象；
+//3、消息重定向：如果上一步返回值是nil，则利用methodSignatureForSelector:方法获取函数的参数和返回值类型。
+   // 1、如果methodSignatureForSelector:返回了一个NSMethodSignature对象（函数签名），Runtime系统就会创建一个NSInvocation对象，并通过forwardInvocation:消息通知当前对象，给予此次消息发送最后一次寻找IMP的机会。
+    //2、如果methodSignatureForSelector:返回nil。则Runtime系统会发出doesNotRecognizeSelector:消息，程序也就崩溃了。
+
 
 @end
 

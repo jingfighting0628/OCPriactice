@@ -10,6 +10,8 @@
 		13722B9927CD26A7F9FC1E30 /* Pods_OCPracticeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F481817F4AD09A7714F8066 /* Pods_OCPracticeTests.framework */; };
 		227AFC1CA61A854584EC933D /* Pods_OCPractice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F01550F9E95CA48223D9119D /* Pods_OCPractice.framework */; };
 		7E395C61D57EA963740C290F /* Pods_OCPractice_OCPracticeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E6397F65B2E1E8BE520B0E /* Pods_OCPractice_OCPracticeUITests.framework */; };
+		C10A298A26D8FB690047B738 /* Person1.m in Sources */ = {isa = PBXBuildFile; fileRef = C10A298926D8FB690047B738 /* Person1.m */; };
+		C10A299026D900250047B738 /* RuntimeViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = C10A298F26D900250047B738 /* RuntimeViewController2.m */; };
 		C10DC4D026009E2B009323BE /* OCPractice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C10DC4CE26009E2B009323BE /* OCPractice.xcdatamodeld */; };
 		C10DC4D226009E2B009323BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C10DC4D126009E2B009323BE /* Assets.xcassets */; };
 		C10DC4D526009E2B009323BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10DC4D326009E2B009323BE /* LaunchScreen.storyboard */; };
@@ -141,6 +143,10 @@
 		92F1AFC093E33B9772F0FBA8 /* Pods-OCPractice-OCPracticeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCPractice-OCPracticeUITests.debug.xcconfig"; path = "Target Support Files/Pods-OCPractice-OCPracticeUITests/Pods-OCPractice-OCPracticeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		99747DE6D54D1B36C48063F1 /* Pods-OCPracticeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCPracticeTests.debug.xcconfig"; path = "Target Support Files/Pods-OCPracticeTests/Pods-OCPracticeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB1EF64E02F6E7B09C080269 /* Pods-OCPracticeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCPracticeTests.release.xcconfig"; path = "Target Support Files/Pods-OCPracticeTests/Pods-OCPracticeTests.release.xcconfig"; sourceTree = "<group>"; };
+		C10A298826D8FB690047B738 /* Person1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person1.h; sourceTree = "<group>"; };
+		C10A298926D8FB690047B738 /* Person1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person1.m; sourceTree = "<group>"; };
+		C10A298E26D900250047B738 /* RuntimeViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RuntimeViewController2.h; sourceTree = "<group>"; };
+		C10A298F26D900250047B738 /* RuntimeViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RuntimeViewController2.m; sourceTree = "<group>"; };
 		C10DC4BF26009E2B009323BE /* OCPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10DC4CF26009E2B009323BE /* OCPractice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OCPractice.xcdatamodel; sourceTree = "<group>"; };
 		C10DC4D126009E2B009323BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -540,6 +546,10 @@
 				C1DE454B26D78F390018E07A /* OCBaseApIViewController.m */,
 				C1DE454E26D790830018E07A /* RuntimeViewController.h */,
 				C1DE454F26D790830018E07A /* RuntimeViewController.m */,
+				C10A298E26D900250047B738 /* RuntimeViewController2.h */,
+				C10A298F26D900250047B738 /* RuntimeViewController2.m */,
+				C10A298826D8FB690047B738 /* Person1.h */,
+				C10A298926D8FB690047B738 /* Person1.m */,
 				C10DC4D126009E2B009323BE /* Assets.xcassets */,
 				C10DC4D326009E2B009323BE /* LaunchScreen.storyboard */,
 				C10DC4D626009E2B009323BE /* Info.plist */,
@@ -1128,6 +1138,7 @@
 				C10DC52126009EAA009323BE /* iOSDevelopLayerAndConversationViewController.m in Sources */,
 				C10DC54B2600A1A2009323BE /* Annimal.m in Sources */,
 				C12BAF772602EFF5001CA962 /* SDImageHEICCoder.m in Sources */,
+				C10A299026D900250047B738 /* RuntimeViewController2.m in Sources */,
 				C12BAF842602EFF5001CA962 /* SDAnimatedImagePlayer.m in Sources */,
 				C1DE455026D790830018E07A /* RuntimeViewController.m in Sources */,
 				C10DC5292600A083009323BE /* Person.m in Sources */,
@@ -1144,6 +1155,7 @@
 				C12BAF852602EFF5001CA962 /* UIImage+Transform.m in Sources */,
 				C12BAF892602EFF5001CA962 /* SDWebImageIndicator.m in Sources */,
 				C12BAFA62602EFF5001CA962 /* SDImageCacheDefine.m in Sources */,
+				C10A298A26D8FB690047B738 /* Person1.m in Sources */,
 				C12BAF972602EFF5001CA962 /* SDDiskCache.m in Sources */,
 				C10DC51C26009EAA009323BE /* AppDelegate.m in Sources */,
 				C10DC5622600A20E009323BE /* Test1.m in Sources */,

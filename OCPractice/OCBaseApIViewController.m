@@ -9,6 +9,7 @@
 
 #import "OCBaseApIViewController.h"
 #import "RuntimeViewController.h"
+#import "RuntimeViewController2.h"
 @interface OCBaseApIViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) NSMutableArray *mArray;
@@ -80,6 +81,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
         RuntimeViewController *vc = [[RuntimeViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (indexPath.row == 1) {
+        RuntimeViewController2 *vc = [[RuntimeViewController2 alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
